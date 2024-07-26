@@ -1,5 +1,7 @@
 package com.moksh;
 
+import com.moksh.actions.ActionType;
+import com.moksh.actions.Actions;
 import com.moksh.annotations.Todo;
 import com.moksh.db.Db;
 import com.moksh.hibernate.HibernateUtil;
@@ -12,22 +14,16 @@ import org.hibernate.resource.transaction.spi.TransactionStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) throws Exception {
-//        createBoilerplateTodo();
-//        createBoilerplateTodo();
+        while (true) {
+            ActionType actionType = Actions.showActionMenu();
 
-        var todos = Db.getAllTodos();
-        var menuItems = makeMenuItemList(todos);
-
-//        Util.showMenu(menuItems);
-
-        sleep(500);
-        Util.clearTerminal();
+            switch (actionType) {
+                case SHOW_TODOS -> Actions.showTodos();
+                case QUIT -> System.exit(0);
+            }
+        }
     }
 
     private static List<MenuItem<Todo>> makeMenuItemList(List<Todo> todos) {

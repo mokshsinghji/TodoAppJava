@@ -9,7 +9,7 @@ public class Util {
     }
 
     public static <T> MenuItem<T> showMenu(List<MenuItem<T>> choices) {
-        clearTerminal();
+//        clearTerminal();
         if (choices == null) {
             return null;
         }
@@ -32,8 +32,24 @@ public class Util {
             System.out.printf("%s. %s\n", numberPadded, name);
         }
 
+        int choiceNum = 0;
+        boolean done = false;
 
-        return choices.get(0);
+        while (!done || choiceNum <= 0 || choiceNum > length) {
+            try {
+                var choice = System.console().readLine("Please select an option: ");
+                System.out.printf(choice);
+                choiceNum = Integer.parseInt(choice);
+                System.out.printf("number: %d\n", choiceNum);
+                done = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number.");
+            }
+        }
+
+        int index = choiceNum - 1;
+
+        return choices.get(index);
     }
 
     public static int getWidth(int maxNum) {
