@@ -21,6 +21,7 @@ public class Main {
 
             switch (actionType) {
                 case SHOW_TODOS -> Actions.showTodos();
+                case CREATE_TODO -> Actions.createTodo();
                 case QUIT -> System.exit(0);
             }
         }

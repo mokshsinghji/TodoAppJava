@@ -9,7 +9,7 @@ public class Util {
     }
 
     public static <T> MenuItem<T> showMenu(List<MenuItem<T>> choices) {
-//        clearTerminal();
+        clearTerminal();
         if (choices == null) {
             return null;
         }
@@ -38,9 +38,7 @@ public class Util {
         while (!done || choiceNum <= 0 || choiceNum > length) {
             try {
                 var choice = System.console().readLine("Please select an option: ");
-                System.out.printf(choice);
                 choiceNum = Integer.parseInt(choice);
-                System.out.printf("number: %d\n", choiceNum);
                 done = true;
             } catch (NumberFormatException e) {
                 System.out.println("Not a number.");

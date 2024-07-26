@@ -3,6 +3,7 @@ package com.moksh.db;
 import com.moksh.annotations.Todo;
 import com.moksh.hibernate.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -13,6 +14,21 @@ public class Db {
         } catch (Exception e) {
             System.out.println("Unable to get all todos");
             throw e;
+        }
+    }
+
+    public static void createTodo(String name) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            var newTodo = new Todo(name);
+            session.persist(newTodo);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
         }
     }
 }

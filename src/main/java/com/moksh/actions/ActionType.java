@@ -2,5 +2,6 @@ package com.moksh.actions;
 
 public enum ActionType {
     SHOW_TODOS,
-    QUIT
+    CREATE_TODO,
+    QUIT,
 }
