@@ -47,4 +47,20 @@ public class Db {
             e.printStackTrace();
         }
     }
+
+    public static void toggleTodoCompleted(Todo todo) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.evict(todo);
+            todo.setCompleted(!todo.isCompleted());
+            session.merge(todo);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
 }

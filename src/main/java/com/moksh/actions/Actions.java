@@ -16,6 +16,7 @@ public class Actions {
                     new MenuItem<>("Show Todos", ActionType.SHOW_TODOS),
                     new MenuItem<>("Create New Todo", ActionType.CREATE_TODO),
                     new MenuItem<>("Change Todo Name", ActionType.CHANGE_TODO_NAME),
+                    new MenuItem<>("Toggle Todo Completed", ActionType.TOGGLE_TODO_COMPLETED),
                     new MenuItem<>("Quit", ActionType.QUIT)
             );
 
@@ -90,6 +91,40 @@ public class Actions {
         Db.editTodoName(selectedTodo.item(), todoName);
 
         System.out.println("Todo name changed");
+        System.out.println();
+        System.console().readLine("Press enter to go back to main menu");
+    }
+
+    public static void toggleTodoCompleted() throws Exception {
+        Util.clearTerminal();
+
+        System.out.println("Edit the name of a todo:");
+
+        var todos = Db.getAllTodos();
+
+        if (todos.isEmpty()) {
+            System.out.println("You do not have any todos to edit");
+            System.console().readLine("Press enter to go back to main menu");
+            return;
+        }
+
+        List<MenuItem<Todo>> menuItems = new ArrayList<>();
+
+        for (Todo todo : todos) {
+            menuItems.add(new MenuItem<>(String.format("[%s] %s", todo.isCompleted() ? "x": " ", todo.getName()), todo));
+        }
+
+        var selectedTodo = Util.showMenu(menuItems);
+
+        Util.clearTerminal();
+
+        assert selectedTodo != null;
+        System.out.println("Selected Todo " + selectedTodo.name());
+
+        Db.toggleTodoCompleted(selectedTodo.item());
+
+        System.out.println("Todo completed status toggled");
+        System.out.println();
         System.console().readLine("Press enter to go back to main menu");
     }
 

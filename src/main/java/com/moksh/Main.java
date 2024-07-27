@@ -23,6 +23,7 @@ public class Main {
                 case SHOW_TODOS -> Actions.showTodos();
                 case CREATE_TODO -> Actions.createTodo();
                 case CHANGE_TODO_NAME -> Actions.editTodoName();
+                case TOGGLE_TODO_COMPLETED -> Actions.toggleTodoCompleted();
                 case QUIT -> System.exit(0);
             }
         }
