@@ -24,6 +24,7 @@ public class Main {
                 case CREATE_TODO -> Actions.createTodo();
                 case CHANGE_TODO_NAME -> Actions.editTodoName();
                 case TOGGLE_TODO_COMPLETED -> Actions.toggleTodoCompleted();
+                case DELETE_TODO -> Actions.deleteTodo();
                 case QUIT -> System.exit(0);
             }
         }

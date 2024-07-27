@@ -5,5 +5,6 @@ public enum ActionType {
     CREATE_TODO,
     CHANGE_TODO_NAME,
     TOGGLE_TODO_COMPLETED,
+    DELETE_TODO,
     QUIT,
 }

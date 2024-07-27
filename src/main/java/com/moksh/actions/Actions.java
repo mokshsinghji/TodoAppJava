@@ -17,6 +17,7 @@ public class Actions {
                     new MenuItem<>("Create New Todo", ActionType.CREATE_TODO),
                     new MenuItem<>("Change Todo Name", ActionType.CHANGE_TODO_NAME),
                     new MenuItem<>("Toggle Todo Completed", ActionType.TOGGLE_TODO_COMPLETED),
+                    new MenuItem<>("Delete Todo", ActionType.DELETE_TODO),
                     new MenuItem<>("Quit", ActionType.QUIT)
             );
 
@@ -98,7 +99,7 @@ public class Actions {
     public static void toggleTodoCompleted() throws Exception {
         Util.clearTerminal();
 
-        System.out.println("Edit the name of a todo:");
+        System.out.println("Toggle the completed state of a todo:");
 
         var todos = Db.getAllTodos();
 
@@ -124,6 +125,39 @@ public class Actions {
         Db.toggleTodoCompleted(selectedTodo.item());
 
         System.out.println("Todo completed status toggled");
+        System.out.println();
+        System.console().readLine("Press enter to go back to main menu");
+    }
+
+    public static void deleteTodo() throws Exception {
+        Util.clearTerminal();
+
+        System.out.println("Delete a todo:");
+
+        var todos = Db.getAllTodos();
+
+        if (todos.isEmpty()) {
+            System.out.println("You do not have any todos to delete");
+            System.console().readLine("Press enter to go back to main menu");
+            return;
+        }
+
+        List<MenuItem<Todo>> menuItems = new ArrayList<>();
+
+        for (Todo todo : todos) {
+            menuItems.add(new MenuItem<>(String.format("[%s] %s", todo.isCompleted() ? "x": " ", todo.getName()), todo));
+        }
+
+        var selectedTodo = Util.showMenu(menuItems);
+
+        Util.clearTerminal();
+
+        assert selectedTodo != null;
+        System.out.println("Selected Todo " + selectedTodo.name());
+
+        Db.deleteTodo(selectedTodo.item());
+
+        System.out.println("Todo deleted");
         System.out.println();
         System.console().readLine("Press enter to go back to main menu");
     }

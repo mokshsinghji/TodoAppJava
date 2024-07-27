@@ -63,4 +63,18 @@ public class Db {
             e.printStackTrace();
         }
     }
+
+    public static void deleteTodo(Todo todo) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.remove(todo);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+    }
 }
